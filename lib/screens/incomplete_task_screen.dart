@@ -4,9 +4,9 @@ import 'package:todoapp/providers/todo_provider.dart';
 import 'package:todoapp/widgets/task_widget.dart';
 
 class InCompleteTaskScreen extends StatelessWidget {
-  Function function3;
+  // Function function3;
 
-  InCompleteTaskScreen(this.function3, {Key? key}) : super(key: key);
+  InCompleteTaskScreen( {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +20,7 @@ class InCompleteTaskScreen extends StatelessWidget {
               Provider.of<TodoProvider>(context)
                   .task
                   .where((element) => !element.isComplete)
-                  .toList()[index],
-              function3);
+                  .toList()[index],);
         });
   }
 }

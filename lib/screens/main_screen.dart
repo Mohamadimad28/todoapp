@@ -5,6 +5,7 @@ import 'package:todoapp/providers/todo_provider.dart';
 import 'package:todoapp/screens/all_task_screen.dart';
 import 'package:todoapp/screens/complete_tasl_screen.dart';
 import 'package:todoapp/screens/incomplete_task_screen.dart';
+import 'package:todoapp/screens/new_task_screen.dart';
 import 'package:todoapp/widgets/task_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -18,10 +19,10 @@ class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
-  checkTask(TaskModel taskModel) {
-    taskModel.isComplete = !taskModel.isComplete;
-    setState(() {});
-  }
+  // checkTask(TaskModel taskModel) {
+  //   taskModel.isComplete = !taskModel.isComplete;
+  //   setState(() {});
+  // }
 
   @override
   void initState() {
@@ -62,20 +63,23 @@ class _MainScreenState extends State<MainScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          // AllTaskScreen(),
-          // CompleteTaskScreen(),
-          // InCompleteTaskScreen(),
-          AllTaskScreen(checkTask),
-          CompleteTaskScreen(checkTask),
-          InCompleteTaskScreen(checkTask),
+          AllTaskScreen(),
+          CompleteTaskScreen(),
+          InCompleteTaskScreen(),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Provider.of<TodoProvider>(context, listen: false).appName = 'Bti';
-          Provider.of<TodoProvider>(context, listen: false).notifyListeners();
+          // Provider.of<TodoProvider>(context, listen: false).appName = 'Bti';
+          // Provider.of<TodoProvider>(context, listen: false).notifyListeners();
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) {
+              return AddNewTasks();
+            }),
+          );
         },
-        child: Icon(Icons.refresh),
+        child: Icon(Icons.add),
       ),
     );
   }

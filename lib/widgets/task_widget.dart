@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todoapp/models/task_model.dart';
+import 'package:todoapp/providers/todo_provider.dart';
 
 class TaskWidget extends StatelessWidget {
   TaskModel task;
-  Function function;
 
-  TaskWidget(this.task, this.function, {Key? key}) : super(key: key);
+  // Function function;
+
+  TaskWidget(this.task, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +21,33 @@ class TaskWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         color: task.isComplete ? Colors.blue : Colors.red,
       ),
-      child: CheckboxListTile(
-        title: Text(
-          task.title,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+      child: Row(
+        children: [
+          IconButton(
+              onPressed: () {
+                Provider.of<TodoProvider>(context, listen: false)
+                    .deleteFromTasks(task);
+              },
+              icon: Icon(Icons.delete)),
+          Expanded(
+            child: CheckboxListTile(
+              title: Text(
+                task.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                ),
+              ),
+              activeColor: Colors.black,
+              value: task.isComplete,
+              onChanged: (v) {
+                // function(task);
+                Provider.of<TodoProvider>(context, listen: false)
+                    .updateTask(task);
+              },
+            ),
           ),
-        ),
-        activeColor: Colors.black,
-        value: task.isComplete,
-        onChanged: (v) {
-          function(task);
-        },
+        ],
       ),
     );
   }
